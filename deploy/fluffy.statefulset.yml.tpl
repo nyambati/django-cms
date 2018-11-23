@@ -6,21 +6,28 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: postgres
-  serviceName: {{ PROJECT_NAME }}-{{ NAMESPACE }}-postgres
+      app: database
+  serviceName: {{ PROJECT_NAME }}-database
   replicas: 3
   template:
     metadata:
       labels:
-        app: postgres
+        app: database
     spec:
       containers:
-        - name: postgres
+        - name: database
           image: postgres:9.6-alpine
           imagePullPolicy: Always
           ports:
             - name: postgres
               containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: fluffy
+            - name: POSTGRES_USER
+              value: fluffy
+            - name: POSTGRES_DB
+              value: fluffy
           volumeMounts:
             - name: postgres-database-volume
               mountPath: /data

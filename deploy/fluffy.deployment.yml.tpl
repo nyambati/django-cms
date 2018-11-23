@@ -24,15 +24,13 @@ spec:
           - containerPort: {{ PORT }}
             name: http
           readinessProbe:
-            httpGet:
-              path: /_healthz
+            tcpSocket:
               port: http
             periodSeconds: 10
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 10
           livenessProbe:
-            httpGet:
-              path: /_healthz
+            tcpSocket:
               port: http
             initialDelaySeconds: 10

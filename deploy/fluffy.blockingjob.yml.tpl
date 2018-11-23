@@ -13,5 +13,6 @@ spec:
           image: thomasnyambati/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}
           command:
           - python
-          - manage.py migrate
+          - manage.py
+          - migrate
       restartPolicy: Never

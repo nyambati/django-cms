@@ -1,7 +1,7 @@
 # Configuration for https://github.com/reactiveops/rok8s-scripts
 
 # Dockerfile to build
-DOCKERFILE='Dockerfile'
+DOCKERFILE='docker/release/Dockerfile'
 
 # External registry domain
 EXTERNAL_REGISTRY_BASE_DOMAIN=thomasnyambati
