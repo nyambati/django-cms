@@ -175,7 +175,7 @@ CMS_PERMISSION = True
 CMS_PLACEHOLDER_CONF = {}
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': dj_database_url.config(default="postgres://fluffy:fluffy@fluffy-database/fluffy")
 }
 
 MIGRATION_MODULES = {
