@@ -11,6 +11,8 @@ export CI_BUILD_NUM=$CI_SHA1
 export CI_TAG=$CI_SHA1
 
 info "Linting configuration files"
+find_tempate_files "TEMPLATES"
+find_and_replace_variables
 k8s-lint
 is_success "Linting completed successfuly"
 

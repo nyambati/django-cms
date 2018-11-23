@@ -28,5 +28,5 @@ require PROJECT_NAME $PROJECT_NAME
 require POSTGRES_PASSWORD $POSTGRES_PASSWORD
 
 # Build template files for deployment.
-find_tempate_files "TEMPLATES"
-find_and_replace_variables
+# find_tempate_files "TEMPLATES"
+# find_and_replace_variables
