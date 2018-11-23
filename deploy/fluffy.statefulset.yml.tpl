@@ -21,6 +21,10 @@ spec:
           ports:
             - name: postgres
               containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: {{ PROJECT_NAME }}-config
+
           env:
             - name: POSTGRES_PASSWORD
               valueFrom: 

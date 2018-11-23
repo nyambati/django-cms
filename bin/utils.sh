@@ -22,8 +22,12 @@ error() {
     exit 1
 }
 
-success () {
+success() {
     printf "\n${BOLD}${GREEN}====> $(echo $@ ) ${NC}\n"
+}
+
+is_success() {
+    if [ $? -eq 0 ]; then success $@; else exit 1; fi
 }
 
 # require "variable name" "value"

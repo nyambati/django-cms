@@ -18,13 +18,13 @@ DOCKERTAG="$EXTERNAL_REGISTRY_BASE_DOMAIN/$REPOSITORY_NAME"
 NAMESPACE={{ NAMESPACE }}
 
 # List of files ending in '.configmap.yml' in the kube directory
-CONFIGMAPS=()
+CONFIGMAPS=('fluffy')
 
 # List of files ending in '.service_account.yml' in the kube directory
 SERVICE_ACCOUNTS=()
 
 # List of files ending in '.secret.yml' in the kube directory
-SECRETS=()
+SECRETS=('fluffy')
 
 # List of secrets to pull from S3
 S3_SECRETS=()
