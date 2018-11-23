@@ -60,5 +60,6 @@ find_and_replace_variables() {
     done
     info "Cleaning backup files after substitution"
     rm -rf deploy/*-e
+    rm -rf deploy/*.yml-*
 }
 

@@ -8,8 +8,8 @@ ENV TERM=xterm-256color
 
 # Installing build dependencies
 RUN apk update && \
-    apk add build-base python-dev py-pip py-pip jpeg-dev zlib-dev && \
-    apk add postgresql-dev libpq
+  apk add build-base python-dev py-pip py-pip jpeg-dev zlib-dev && \
+  apk add postgresql-dev libpq bash
 
 RUN pip install --upgrade pip
 
