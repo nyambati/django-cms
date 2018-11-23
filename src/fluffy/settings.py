@@ -32,7 +32,7 @@ SECRET_KEY = 'erf^1y*%jq#q*fegila+%#q4bkdf3tnvx6z2#lr=yer$x4nap_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
