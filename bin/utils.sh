@@ -35,6 +35,11 @@ require () {
     if [ -z ${2+x} ]; then error "Required variable ${1} has not been set"; fi
 }
 
+base_64_encode () {
+    if [ -z ${1+x} ]; then error "The value supplied is empty"; fi
+    echo $1 | base64 $2 $3
+}
+
 find_tempate_files() {
     local _yamlFilesVariable=$1
     local _templates=$(find $ROOT_DIR/deploy -name "*.tpl" -type f)
@@ -67,3 +72,6 @@ find_and_replace_variables() {
     rm -rf deploy/*.yml-*
 }
 
+if [ `uname` == 'Linux' ]; then
+    export BASE_64_ARGS='-w 0'
+fi

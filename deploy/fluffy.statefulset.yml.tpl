@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: database
   serviceName: {{ PROJECT_NAME }}-database
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -24,19 +24,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ PROJECT_NAME }}-config
-
-          env:
-            - name: POSTGRES_PASSWORD
-              valueFrom: 
+            - secretRef:
                 name: {{ PROJECT_NAME }}-env-secrets
-                key: POSTGRES_PASSWORD
+          env:
             - name: POSTGRES_USER
               value: fluffy
             - name: POSTGRES_DB
               value: fluffy
           volumeMounts:
             - name: postgres-database-volume
-              mountPath: /data
+              mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
       name: postgres-database-volume

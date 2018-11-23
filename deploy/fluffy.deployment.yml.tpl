@@ -11,9 +11,17 @@ spec:
       labels:
         app: {{ PROJECT_NAME }}
     spec:
+      initContainers:
+        - name: collect-static-files
+          image: "{{ CONTAINER_REGISTRY }}/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}"
+          command:
+            - python
+            - manage.py
+            - collectstatic
+            - --no-input
       containers:
         - name: app
-          image: thomasnyambati/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}
+          image: "{{ CONTAINER_REGISTRY }}/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}"
           imagePullPolicy: Always
           command:
             - gunicorn

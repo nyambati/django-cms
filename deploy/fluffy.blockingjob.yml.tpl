@@ -9,8 +9,8 @@ spec:
       name: {{ PROJECT_NAME }}
     spec:
       containers:
-        - name: {{ PROJECT_NAME }}
-          image: thomasnyambati/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}
+        - name: run-migrations
+          image: "{{ CONTAINER_REGISTRY }}/{{ PROJECT_NAME }}:{{ IMAGE_TAG }}"
           command:
           - python
           - manage.py

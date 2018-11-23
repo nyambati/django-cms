@@ -7,8 +7,11 @@ ENV DOCKERIZE_VERSION v0.6.1
 
 ADD https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubectl /usr/local/bin/kubectl
 
-RUN apk --no-cache add curl python py-crcmod bash libc6-compat openssh-client git \
+RUN apk --no-cache add curl py-crcmod bash libc6-compat openssh-client git \
   gnupg ca-certificates docker vim
+# python dependencies
+RUN apk add python python-dev py-pip build-base python-dev jpeg-dev zlib-dev && \
+  apk add postgresql-dev libpq bash
 
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
   tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \

@@ -1,0 +1,12 @@
+- Deployment
+- Security
+- Scale
+  - Resource limits
+  - Monitoring
+  -
+- Improve
+  - Use external database
+  - Use helm charts for templating
+  - Deployment notification
+  - Error management
+  - CI to cater for multiple environment deployment

@@ -4,7 +4,7 @@
 DOCKERFILE='docker/release/Dockerfile'
 
 # External registry domain
-EXTERNAL_REGISTRY_BASE_DOMAIN=thomasnyambati
+EXTERNAL_REGISTRY_BASE_DOMAIN={{ CONTAINER_REGISTRY }}
 
 # Name of repository/project
 REPOSITORY_NAME={{ PROJECT_NAME }}

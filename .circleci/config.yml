@@ -1,0 +1,115 @@
+version: 2
+defaults: &defaults
+  docker:
+    - image: thomasnyambati/circleci
+      environment:
+        DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+    - image: circleci/postgres:9.6.2
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_DB: circle_test
+  working_directory: ~/fluffy
+persist_to_workspace: &persist_to_workspace
+  persist_to_workspace:
+    root: .
+    paths: .
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/fluffy
+jobs:
+  checkout:
+    <<: *defaults
+    steps:
+      - checkout
+      - *persist_to_workspace
+  test:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "src/requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: pip install -r src/requirements.txt
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "src/requirements.txt" }}
+      - run:
+          name: Wait for database to start
+          command: dockerize -wait tcp://localhost:5432 -timeout 20s
+      - run:
+          name: Run Application tests
+          command: python src/manage.py test
+  build_config_templates:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Build and lint config templates
+          command: |
+            bin/template.sh find_tempate_files "TEMPLATES"
+            bin/template.sh find_and_replace_variables
+      - *persist_to_workspace
+  build_application_artifacts:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Activate Google Cloud Service Account
+          command: bin/build_and_deploy.sh activate_google_service_account
+      - run:
+          name: Build and push docker image
+          command: bin/build_and_deploy.sh build_and_push_docker_image
+      - *persist_to_workspace
+
+  deploy:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Activate Google Cloud Service Account
+          command: bin/build_and_deploy.sh activate_google_service_account
+      - run:
+          name: Deploy Application to kubernetes cluster
+          command: k8s-deploy-and-verify
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - checkout
+      - test:
+          requires:
+            - checkout
+      - approve:
+          requires:
+            - build_application_artifacts
+          filters:
+            branches:
+              only:
+                - master
+      - build_config_templates:
+          requires:
+            - checkout
+
+      - build_application_artifacts:
+          requires:
+            - build_config_templates
+            - test
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - approve
+            - build_application_artifacts
+          filters:
+            branches:
+              only:
+                - master

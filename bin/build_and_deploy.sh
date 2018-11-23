@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-DIR=`pwd`
+set -eo pipefail
+
+ROOT_DIR=`pwd`
+
+. $ROOT_DIR/bin/utils.sh
 
 activate_google_service_account() {
     require PROJECT_ID $PROJECT_ID
@@ -22,7 +26,7 @@ build_and_push_docker_image() {
     require AUTH_USERNAME $AUTH_USERNAME
     require AUTH_PASSWORD $AUTH_PASSWORD
     info "Building docker image for $NAMESPACE environment"
-    docker login -u $AUTH_USERNAME -p $AUTH_PASSWORD
+    gcloud auth configure-docker
     docker-build
     info "Pushing built docker image to container registry"
     docker-push
