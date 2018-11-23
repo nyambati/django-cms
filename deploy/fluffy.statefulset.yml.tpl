@@ -23,7 +23,9 @@ spec:
               containerPort: 5432
           env:
             - name: POSTGRES_PASSWORD
-              value: fluffy
+              valueFrom: 
+                name: {{ PROJECT_NAME }}-env-secrets
+                key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               value: fluffy
             - name: POSTGRES_DB

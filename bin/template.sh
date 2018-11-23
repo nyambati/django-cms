@@ -5,7 +5,7 @@ ROOT_DIR=`pwd`
 . $ROOT_DIR/bin/utils.sh
 
 COMMIT_SHA=`git rev-parse --short HEAD`
-VARIABLES=('NAMESPACE' 'IMAGE_TAG' 'PORT' 'PROJECT_NAME')
+VARIABLES=('NAMESPACE' 'IMAGE_TAG' 'PORT' 'PROJECT_NAME' 'POSTGRES_PASSWORD')
 
 # Image tag and namespace should be diffrent based on branches
 if [ "$CIRCLE_BRANCH" == 'master' ]; then
@@ -25,6 +25,7 @@ require NAMESPACE $NAMESPACE
 require IMAGE_TAG $IMAGE_TAG
 require PORT $PORT
 require PROJECT_NAME $PROJECT_NAME
+require POSTGRES_PASSWORD $POSTGRES_PASSWORD
 
 # Build template files for deployment.
 find_tempate_files "TEMPLATES"
