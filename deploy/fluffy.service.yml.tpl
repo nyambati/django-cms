@@ -10,7 +10,7 @@ spec:
   type: NodePort
   ports:
     - port: 80
-      targetPort: proxy
+      targetPort: app
       protocol: TCP
       name: http
   selector:

@@ -36,8 +36,3 @@ spec:
               path: /_healthz
               port: http
             initialDelaySeconds: 10
-        - name: proxy
-          image: thomasnyambati/fluffy-proxy
-          ports:
-            - containerPort: 80
-              name: proxy
